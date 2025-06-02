@@ -5,9 +5,11 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import Table, { Records } from "@/components/tables/Table";
 import Button from "@/components/ui/button/Button";
 import { useRouter } from "next/navigation";
-import { accountProvider } from "@/providers/account-group-provider";
-import { AccountGroup } from "@/app/types/account-group";
+import { AccountGroup } from "@/types/account-group";
 
+interface Props {
+  data: AccountGroup[];
+}
 const optionsData = (payload: AccountGroup[]) => {
   const data: Records[] = payload.map(item => {
     return [
@@ -19,11 +21,10 @@ const optionsData = (payload: AccountGroup[]) => {
   return data;
 };
 
-export async function SearchView() {
+export async function SearchView({ data }: Props) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { push } = useRouter();
-  const { getAll } = accountProvider();
-  const data = optionsData(await getAll());
+
   return (
     <div>
       <PageBreadcrumb pageTitle="Grupo de Contas" />
@@ -34,7 +35,7 @@ export async function SearchView() {
             "Nome",
             "Status"
           ]}
-            records={data}
+            records={optionsData(data)}
           />
         </ComponentCard>
       </div>

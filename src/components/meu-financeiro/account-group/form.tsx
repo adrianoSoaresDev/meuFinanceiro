@@ -1,4 +1,4 @@
-import { AccountSubGroup, AccountSubGroupBase } from "@/app/types/sub-account-group";
+import { AccountGroup, AccountGroupBase } from "@/types/account-group";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 
 interface Props {
   onBack: () => void;
-  onSave: (data: AccountSubGroupBase) => Promise<AccountSubGroup>;
+  onSave: (data: AccountGroupBase) => Promise<AccountGroup>;
 }
 export function AccountGroupForm({ onBack, onSave }: Props) {
-  const [form, setForm] = useState<AccountSubGroupBase>({
-    idGroup: 0,
+  const [form, setForm] = useState<AccountGroupBase>({
     name: "",
     status: true
   });
