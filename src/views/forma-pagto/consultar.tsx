@@ -5,13 +5,17 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import Table, { Records } from "@/components/tables/Table";
 import Button from "@/components/ui/button/Button";
 import { useRouter } from "next/navigation";
-import { PaymentType } from "@/app/types/payment-type";
+import { PaymentMethod } from "@/types/payment-method";
 import { paymentTypeProvider } from "@/providers/payment-method-provider";
 
-const optionsData = (payload: PaymentType[]) => {
+interface Props {
+  data: PaymentMethod[];
+}
+const optionsData = (payload: PaymentMethod[]) => {
   const data: Records[] = payload.map(item => {
     return [
       { value: item.name },
+      { value: item.type },
       { value: item.status ? "Ativo" : "Inativo", color: item.status ? "success" : "error" },
     ];
   });
@@ -19,11 +23,9 @@ const optionsData = (payload: PaymentType[]) => {
   return data;
 };
 
-export async function SearchPaymentTypeView() {
+export async function SearchPaymentTypeView({ data }: Props) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { push } = useRouter();
-  const { getAll } = paymentTypeProvider();
-  const data = optionsData(await getAll());
   return (
     <div>
       <PageBreadcrumb pageTitle="Formas de Pagamento" />
@@ -35,7 +37,7 @@ export async function SearchPaymentTypeView() {
             "Tipo",
             "Status"
           ]}
-            records={data}
+            records={optionsData(data)}
           />
         </ComponentCard>
       </div>

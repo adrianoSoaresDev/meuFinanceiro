@@ -3,12 +3,12 @@ import { useState } from "react";
 import Button from "../../ui/button/Button";
 import Label from "../../form/Label";
 import Input from "../../form/input/InputField";
-import { PaymentType, PaymentTypeBase, TypePayment } from "@/app/types/payment-type";
+import { PaymentMethodBase, MethodPayment } from "@/types/payment-method";
 import Select, { Option } from "@/components/form/Select";
 
 interface Props {
   options: Option[];
-  onSave: (data: PaymentTypeBase) => Promise<PaymentType>;
+  onSave: (data: PaymentMethodBase) => Promise<void>;
   onBack: () => void;
 }
 export default function PaymentTypeForm({
@@ -16,7 +16,7 @@ export default function PaymentTypeForm({
   onBack,
   onSave
 }: Props) {
-  const [formData, setForm] = useState<PaymentTypeBase>({
+  const [formData, setForm] = useState<PaymentMethodBase>({
     icon: "",
     name: "",
     status: true,
@@ -39,7 +39,7 @@ export default function PaymentTypeForm({
           <Select
             options={options}
             onChange={function (value: string): void {
-              setForm(currentValue => ({ ...currentValue, type: value as TypePayment }));
+              setForm(currentValue => ({ ...currentValue, type: value as MethodPayment }));
             }} />
         </div>
       </div>
