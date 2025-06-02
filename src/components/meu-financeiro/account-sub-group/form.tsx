@@ -1,4 +1,4 @@
-import { AccountSubGroup, AccountSubGroupBase } from "@/app/types/sub-account-group";
+import { AccountSubGroup, AccountSubGroupBase } from "@/types/account-sub-group";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Select, { Option } from "@/components/form/Select";
@@ -8,11 +8,11 @@ import { useEffect, useState } from "react";
 interface Props {
   accountGroupOptions: Option[],
   onBack: () => void;
-  onSave: (data: AccountSubGroupBase) => Promise<AccountSubGroup>;
+  onSave: (data: AccountSubGroupBase) => Promise<void>;
 }
 export function AccountSubGroupForm({ accountGroupOptions, onBack, onSave }: Props) {
   const [form, setForm] = useState<AccountSubGroupBase>({
-    idGroup: 0,
+    accountGroupId: 0,
     name: "",
     status: true
   });
@@ -29,7 +29,7 @@ export function AccountSubGroupForm({ accountGroupOptions, onBack, onSave }: Pro
           <Label>Grupo de Conta</Label>
           <Select
             onChange={(value) => {
-              setForm((currentValue => ({ ...currentValue, idGroup: Number(value) })));
+              setForm((currentValue => ({ ...currentValue, accountGroupId: Number(value) })));
             }}
             options={accountGroupOptions}
           />
@@ -40,10 +40,10 @@ export function AccountSubGroupForm({ accountGroupOptions, onBack, onSave }: Pro
           <Label>Nome</Label>
           <Input
             type="text"
-            placeholder="Ex: Cartão de Crédito"
+            placeholder="Ex: mercado"
             defaultValue={form.name}
             onChange={(event) => {
-              setForm((currentValue => ({ ...currentValue, name: String(event.target.value) })));
+              setForm((currentValue => ({ ...currentValue, name: String(event.target.value.trim()) })));
             }
             } />
         </div>

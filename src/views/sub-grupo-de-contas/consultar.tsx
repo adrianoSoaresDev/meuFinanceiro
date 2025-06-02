@@ -5,7 +5,7 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import Table, { Records } from "@/components/tables/Table";
 import Button from "@/components/ui/button/Button";
 import { useRouter } from "next/navigation";
-import { AccountSubGroup } from "@/app/types/sub-account-group";
+import { AccountSubGroup } from "@/types/account-sub-group";
 
 interface Props {
   data: AccountSubGroup[];

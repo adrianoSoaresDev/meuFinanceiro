@@ -1,5 +1,5 @@
 
-import { accountProvider } from "@/providers/account-group-provider";
+import { accountGroupProvider } from "@/providers/account-group-provider";
 import { accountSubGroupProvider } from "@/providers/account-sub-group-provider";
 import { SearchView } from "@/views/sub-grupo-de-contas/consultar";
 import { Metadata } from "next";
