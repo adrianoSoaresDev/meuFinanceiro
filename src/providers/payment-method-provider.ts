@@ -1,9 +1,9 @@
 import { PaymentMethod, PaymentMethodBase } from "@/types/payment-method";
 
-const ENDPOINT = "payment-type";
+const ENDPOINT = "payment-method";
 const PATH = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/${ENDPOINT}`;
 
-export function paymentTypeProvider() {
+export function paymentMethodProvider() {
   const get = async (id: number): Promise<PaymentMethod> => {
     try {
       const response = await fetch(`${PATH}/${id}`);
@@ -17,6 +17,8 @@ export function paymentTypeProvider() {
   const getAll = async (): Promise<PaymentMethod[]> => {
     try {
       const response = await fetch(PATH);
+      console.log(response);
+
       if (response.status == 404) return [];
       const data = await response.json();
       return data;

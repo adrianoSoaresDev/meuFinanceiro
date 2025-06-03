@@ -2,7 +2,7 @@
 import { PaymentMethod, PaymentMethodBase } from "@/types/payment-method";
 import prisma from "../../lib/prisma";
 
-export class PaymentTypeRepository {
+export class PaymentMethodRepository {
   async getAll(): Promise<PaymentMethod[]> {
     return prisma.paymentType.findMany();
   }

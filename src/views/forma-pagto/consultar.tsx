@@ -6,7 +6,7 @@ import Table, { Records } from "@/components/tables/Table";
 import Button from "@/components/ui/button/Button";
 import { useRouter } from "next/navigation";
 import { PaymentMethod } from "@/types/payment-method";
-import { paymentTypeProvider } from "@/providers/payment-method-provider";
+import { paymentMethodProvider } from "@/providers/payment-method-provider";
 
 interface Props {
   data: PaymentMethod[];
