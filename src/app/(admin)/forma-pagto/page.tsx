@@ -17,11 +17,7 @@ export default async function Page() {
   try {
     const paymentsMethods = await getAll();
     data.push(...paymentsMethods);
-    console.log(paymentsMethods);
-
   } catch (error) {
-    console.log(error);
-
     redirect("/500");
 
   }

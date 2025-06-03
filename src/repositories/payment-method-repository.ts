@@ -12,13 +12,18 @@ export class PaymentMethodRepository {
   }
 
   async post(payload: PaymentMethodBase): Promise<PaymentMethod> {
-    console.log(payload);
     return prisma.paymentType.create({ data: payload }).catch((e) => {
-      console.log(e);
       return Promise.reject(e);
     });
   }
   async put(id: number, payload: PaymentMethodBase): Promise<PaymentMethod> {
     return prisma.paymentType.update({ where: { id }, data: payload });
+  }
+
+  async remove(id: number): Promise<PaymentMethod> {
+    return prisma.paymentType.delete({ where: { id } }).catch((e) => {
+      console.log(e);
+      throw e;
+    });
   }
 }

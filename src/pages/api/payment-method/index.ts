@@ -8,30 +8,15 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const repository = new PaymentMethodRepository();
+
   if (req.method == "GET") {
-    if (req.query?.id) {
-      const response = await repository.get(Number(req.query.id));
-
-      if (!response)
-        return res
-          .status(HTTP_STATUS_CODE.NOT_FOUND)
-          .json({ status: "error", message: "Registro não encontrado" });
-
-      console.log(response);
-
-      return res.status(HTTP_STATUS_CODE.SUCCESS).json(response);
-    } else {
-      const response = await repository.getAll();
-      return res.status(HTTP_STATUS_CODE.SUCCESS).json(response);
-    }
+    const response = await repository.getAll();
+    return res.status(HTTP_STATUS_CODE.SUCCESS).json(response);
   }
   if (req.method == "POST") {
     try {
       const payload: PaymentMethodBase = JSON.parse(req.body);
-      console.log("POST METHOD", payload);
       const response = await repository.post(payload);
-      console.log(response);
-
       return res.status(HTTP_STATUS_CODE.SUCCESS).json(response);
     } catch (error) {
       console.log(error);
@@ -41,4 +26,9 @@ export default async function handler(
       });
     }
   }
+
+  return res.status(HTTP_STATUS_CODE.NOT_FOUND).json({
+    status: "error",
+    message: "Recurso não encontrado ou inexistente",
+  });
 }

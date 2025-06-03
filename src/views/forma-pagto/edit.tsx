@@ -1,38 +1,50 @@
 "use client";
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import ComponentCard from "../../components/common/ComponentCard";
 import { useRouter } from "next/navigation";
-import { PaymentMethodBase } from "@/types/payment-method";
+import { PaymentMethod, PaymentMethodBase } from "@/types/payment-method";
 import PaymentTypeForm from "@/components/meu-financeiro/forma-pagto/form";
 import { paymentMethodProvider } from "@/providers/payment-method-provider";
 import Alert from "@/components/ui/alert/Alert";
 import { PAYMENT_METHOD_OPTIONS } from "@/constants/payment-method";
 
-export function CadastrarFormaPagamentoView() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { back, push } = useRouter();
+interface Props {
+  data: PaymentMethod;
+}
+export function EditPaymentMethodView({ data }: Props) {
+  const { push, } = useRouter();
   const [error, setError] = useState<boolean | string>(false);
-  const { post } = paymentMethodProvider();
-  const handleSave = async (data: PaymentMethodBase) => {
+  const { put, remove } = paymentMethodProvider();
+  const handleSave = async (payload: PaymentMethodBase) => {
     try {
-      await post(data);
+      await put({ ...payload, id: data.id });
       return push("/forma-pagto");
     } catch (error) {
       setError(error.message);
     }
   };
-  const onBack = () => back();
+  const onBack = () => push("/forma-pagto");
+  const handleRemove = useMemo(() => async () => {
+    try {
+      await remove(data.id);
+      return push("/forma-pagto/");
+    } catch (error) {
+      setError(error.message);
+    }
+  }, [push, remove]);
 
   return (
-    <ComponentCard title="Cadastrar Forma de Pagamento">
+    <ComponentCard title="Editar Forma de Pagamento">
       {error && <Alert
         message={String(error)}
         title="Ocorreu um erro durante o cadastro"
         variant="error"
       />}
       <PaymentTypeForm
+        data={data}
         onBack={onBack}
         onSave={handleSave}
+        onRemove={handleRemove}
         options={PAYMENT_METHOD_OPTIONS}
       />
     </ComponentCard>

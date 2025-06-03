@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ComponentCard from "../../components/common/ComponentCard";
 import { useRouter } from "next/navigation";
 import { AccountGroup } from "@/types/account-group";
-import { AccountSubGroup, AccountSubGroupBase } from "@/types/account-sub-group";
+import { AccountSubGroupBase } from "@/types/account-sub-group";
 import { AccountSubGroupForm } from "@/components/meu-financeiro/account-sub-group/form";
 import { accountSubGroupProvider } from "@/providers/account-sub-group-provider";
 import Alert from "@/components/ui/alert/Alert";

@@ -1,3 +1,4 @@
+import { HTTP_STATUS_CODE } from "@/constants/http-status";
 import { PaymentMethod, PaymentMethodBase } from "@/types/payment-method";
 
 const ENDPOINT = "payment-method";
@@ -7,6 +8,7 @@ export function paymentMethodProvider() {
   const get = async (id: number): Promise<PaymentMethod> => {
     try {
       const response = await fetch(`${PATH}/${id}`);
+      if (!response.ok) throw response;
       const data = await response.json();
       return data;
     } catch (error) {
@@ -17,9 +19,7 @@ export function paymentMethodProvider() {
   const getAll = async (): Promise<PaymentMethod[]> => {
     try {
       const response = await fetch(PATH);
-      console.log(response);
-
-      if (response.status == 404) return [];
+      if (response.status == HTTP_STATUS_CODE.NOT_FOUND) return [];
       const data = await response.json();
       return data;
     } catch (error) {
@@ -55,11 +55,18 @@ export function paymentMethodProvider() {
     }
   };
 
-  const remove = (id: number) => {
-    return {
-      status: "ok",
-      mensagem: "Funcionalidade não implementada!",
-    };
+  const remove = async (id: number) => {
+    try {
+      const response = await fetch(`${PATH}/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) throw response;
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+      return Promise.reject(error);
+    }
   };
 
   return {
