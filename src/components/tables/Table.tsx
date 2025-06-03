@@ -11,7 +11,7 @@ import Badge from "../ui/badge/Badge";
 import Image from "next/image";
 
 export type Records = {
-  value: string;
+  value: string | React.ReactElement | React.ReactElement[];
   color?: "success" | "warning" | "error";
   icon?: string;
 }[];
@@ -51,7 +51,7 @@ export default function BasicTable(props: Props) {
                           width={40}
                           height={40}
                           src={cell.icon}
-                          alt={cell.value}
+                          alt={typeof cell.value == "string" ? cell.value : ""}
                         />
                       </div>}
                       {cell.color && <Badge
@@ -59,7 +59,7 @@ export default function BasicTable(props: Props) {
                         color={cell.color}
                         variant="solid"
                       >
-                        {cell.value}
+                        {Array.isArray(cell.value) ? cell.value.map(item => <span>item</span>) : cell.value}
                       </Badge>}
                       {!cell.color && <div>
                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
